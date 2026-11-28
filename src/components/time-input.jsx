@@ -12,7 +12,7 @@ export function TimeInput({ label, value, onChange, error, showNow = true, place
       <label htmlFor={id} className="text-sm font-medium">
         {label}
       </label>
-      <div className="flex gap-2">
+      <div className="flex gap-2 flex-wrap">
         <input
           id={id}
           dir="ltr"

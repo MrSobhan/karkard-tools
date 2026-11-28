@@ -2,10 +2,28 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* ─── Fonts ──────────────────────────────────────────────────────── */
 @font-face {
-  font-family: "Vazirmatn";
-  src: local("Vazirmatn"), url("/fonts/Vazirmatn-Variable.woff2") format("woff2");
-  font-weight: 100 900;
+  font-family: "Morabba";
+  src: url("/fonts/Morabba/woff2/Morabba-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Dana";
+  src: url("/fonts/Dana/woff2/DanaFaNum-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Dana";
+  src: url("/fonts/Dana/woff2/DanaFaNum-DemiBold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
   font-display: swap;
 }
 
@@ -68,9 +86,7 @@
   --color-danger: var(--danger);
   --color-danger-soft: var(--danger-soft);
   --color-warn: var(--warn);
-  --color-warn-soft: var(--warn-soft);
-  --color-ring: var(--ring);
-  --font-sans: "Vazirmatn", "Segoe UI", Tahoma, system-ui, sans-serif;
+  --font-sans: "Dana", Tahoma, system-ui, sans-serif;
 }
 
 html { color-scheme: light; }

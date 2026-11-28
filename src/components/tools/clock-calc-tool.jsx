@@ -196,7 +196,7 @@ export function ClockCalcTool() {
             aria-selected={section === s.id}
             onClick={() => setSection(s.id)}
             className={cn(
-              "rounded-lg px-3.5 py-1.5 text-sm transition-all duration-150",
+              "rounded-lg px-3.5 py-1.5 text-sm transition-all duration-150 cursor-pointer",
               section === s.id
                 ? "bg-background font-medium shadow-sm"
                 : "text-muted-foreground hover:text-foreground",

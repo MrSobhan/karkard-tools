@@ -13,16 +13,11 @@ export function Switch({ checked, onCheckedChange, label }) {
       aria-label={label}
       onClick={() => onCheckedChange(!checked)}
       className={cn(
-        "relative h-6 w-11 shrink-0 rounded-full border transition-colors duration-200",
+        "relative h-6 w-11 shrink-0 rounded-full border transition-colors duration-200 cursor-pointer",
         checked ? "border-primary bg-primary" : "border-border bg-muted",
       )}
     >
-      <span
-        className={cn(
-          "absolute top-0.5 size-5 rounded-full bg-white shadow-sm transition-all duration-200",
-          checked ? "right-[1.35rem]" : "right-0.5",
-        )}
-      />
+      <span className={cn("absolute top-px size-5 rounded-full bg-white shadow transition-all", checked ? "right-[1.27rem]" : "right-0.5")} />
     </button>
   );
 }

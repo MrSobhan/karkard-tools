@@ -41,10 +41,8 @@ export function Tabs({ tabs, value, onValueChange, label }) {
             tabIndex={active ? 0 : -1}
             onClick={() => onValueChange(tab.id)}
             className={cn(
-              "flex shrink-0 items-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-medium transition-all duration-150",
-              active
-                ? "border-primary/40 bg-primary-soft text-primary shadow-sm"
-                : "border-transparent text-muted-foreground hover:bg-muted hover:text-foreground",
+              "flex shrink-0 items-center gap-2 rounded-xl border px-3.5 py-2 text-sm font-medium transition cursor-pointer",
+              active ? "border-primary/40 bg-primary/15 text-primary" : "border-transparent text-muted-foreground hover:bg-muted",
             )}
           >
             <Icon className="size-4" aria-hidden />
