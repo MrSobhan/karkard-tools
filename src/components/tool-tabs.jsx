@@ -18,12 +18,19 @@ const TABS = [
 
 export function ToolTabs() {
   const [active, setActive] = useState("daily");
+
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-5">
       <Tabs tabs={TABS} value={active} onValueChange={setActive} label="ابزارهای کارکرد" />
-      {/* همه‌ی ابزارها mount می‌مانند تا ورودی‌ها هنگام تعویض تب پاک نشوند */}
       {TABS.map(({ id, Comp }) => (
-        <div key={id} id={`panel-${id}`} role="tabpanel" aria-labelledby={`tab-${id}`} hidden={active !== id} className={active === id ? "tab-in" : undefined}>
+        <div
+          key={id}
+          id={`panel-${id}`}
+          role="tabpanel"
+          aria-labelledby={`tab-${id}`}
+          hidden={active !== id}
+          className={active === id ? "tab-in" : undefined}
+        >
           <Comp />
         </div>
       ))}

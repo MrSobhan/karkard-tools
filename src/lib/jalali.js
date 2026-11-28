@@ -1,4 +1,3 @@
-// تبدیل تاریخ شمسی/میلادی (الگوریتم jalaali-js، بدون وابستگی)
 const div = (a, b) => ~~(a / b);
 const mod = (a, b) => a - ~~(a / b) * b;
 const BREAKS = [-61, 9, 38, 199, 426, 686, 756, 818, 1111, 1181, 1210, 1635, 2060, 2097, 2192, 2262, 2324, 2394, 2456, 3178];
@@ -44,13 +43,11 @@ function d2g(jdn) {
   return { gy, gm, gd };
 }
 
-/** شمسی → شماره‌ی روز ژولینی */
 export function j2d(jy, jm, jd) {
   const r = jalCal(jy);
   return g2d(r.gy, 3, r.march) + (jm - 1) * 31 - div(jm, 7) * (jm - 7) + jd - 1;
 }
 
-/** شماره‌ی روز ژولینی → شمسی */
 export function d2j(jdn) {
   const g = d2g(jdn);
   let jy = g.gy - 621;
@@ -80,7 +77,6 @@ export function jalaliMonthLength(jy, jm) {
   return j2d(jy + 1, 1, 1) - j2d(jy, 12, 1);
 }
 
-/** ۰ = شنبه … ۶ = جمعه */
 export function jalaliWeekday(jy, jm, jd) {
   return (j2d(jy, jm, jd) + 2) % 7;
 }

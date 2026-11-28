@@ -14,4 +14,3 @@ npm run dev
 ## نکات
 - قوانین کاری: `src/lib/work-rules.js` — منطق: `src/lib/calc.js` — تست‌ها: `src/lib/__tests__/calc.test.js`
 - فونت Vazirmatn: فایل `Vazirmatn-Variable.woff2` را در `public/fonts/` بگذارید.
-- کامپوننت‌های UI (tabs, card, badge, switch, select, button) به سبک shadcn و سبک نوشته شده‌اند؛ اگر خواستید می‌توانید با `pnpm dlx shadcn@latest init` جایگزین کنید.

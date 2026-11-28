@@ -1,7 +1,8 @@
 "use client";
 import { useSyncExternalStore } from "react";
 
-const noop = () => () => {};
+const subscribe = () => () => {};
+
 export function useMounted() {
-  return useSyncExternalStore(noop, () => true, () => false);
+  return useSyncExternalStore(subscribe, () => true, () => false);
 }

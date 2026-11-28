@@ -2,16 +2,15 @@
 import { useCallback, useMemo, useSyncExternalStore } from "react";
 import { writeJSON } from "@/lib/storage";
 
-function subscribe(cb) {
-  window.addEventListener("storage", cb);
-  window.addEventListener("karkard-storage", cb);
+function subscribe(callback) {
+  window.addEventListener("storage", callback);
+  window.addEventListener("karkard-storage", callback);
   return () => {
-    window.removeEventListener("storage", cb);
-    window.removeEventListener("karkard-storage", cb);
+    window.removeEventListener("storage", callback);
+    window.removeEventListener("karkard-storage", callback);
   };
 }
 
-/** خواندن/نوشتن امن localStorage بدون ناهماهنگی hydration */
 export function useLocalStorage(key, fallback) {
   const raw = useSyncExternalStore(
     subscribe,
@@ -24,6 +23,7 @@ export function useLocalStorage(key, fallback) {
     },
     () => null,
   );
+
   const value = useMemo(() => {
     try {
       return raw ? JSON.parse(raw) : fallback;
@@ -31,6 +31,8 @@ export function useLocalStorage(key, fallback) {
       return fallback;
     }
   }, [raw, fallback]);
-  const set = useCallback((next) => writeJSON(key, next), [key]);
-  return [value, set];
+
+  const setValue = useCallback((next) => writeJSON(key, next), [key]);
+
+  return [value, setValue];
 }

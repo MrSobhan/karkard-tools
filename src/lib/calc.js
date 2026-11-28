@@ -1,12 +1,6 @@
 import { RULES } from "./work-rules";
 import { formatTime } from "./time";
 
-/**
- * محاسبه‌ی یک روز کاری. همه‌چیز pure است و ورودی/خروجی بر حسب دقیقه از نیمه‌شب.
- * @param {number|null} entry
- * @param {number|null} exit
- * @param {typeof RULES} rules
- */
 export function calculateDay(entry, exit, rules = RULES) {
   const empty = {
     presence: 0,
@@ -18,6 +12,7 @@ export function calculateDay(entry, exit, rules = RULES) {
     status: "empty",
     error: null,
   };
+
   if (entry == null) return empty;
 
   const effectiveStart = rules.clampEarlyEntry ? Math.max(entry, rules.officialStart) : entry;
@@ -26,6 +21,7 @@ export function calculateDay(entry, exit, rules = RULES) {
   const base = { ...empty, requiredExit, late, status: "incomplete" };
 
   if (exit == null) return base;
+
   if (exit <= entry) {
     return { ...base, status: "invalid", error: "ساعت خروج باید بعد از ساعت ورود باشد." };
   }
@@ -49,15 +45,10 @@ export function calculateDay(entry, exit, rules = RULES) {
   return { ...base, presence, overtime, earlyLeave, leaveSuggestion, status };
 }
 
-/** «کی برم؟» ورود → خروج موظف */
 export function requiredExitFor(entry, rules = RULES) {
   return calculateDay(entry, null, rules).requiredExit;
 }
 
-/**
- * «کی باید می‌اومدم؟» خروج → آخرین ورود بدون کسری
- * @returns {{latestEntry:number|null, unavoidableEarlyLeave:boolean}}
- */
 export function latestEntryFor(exit, rules = RULES) {
   const needed = exit - rules.requiredMinutes;
   if (needed < 0) return { latestEntry: null, unavoidableEarlyLeave: true };
@@ -67,7 +58,6 @@ export function latestEntryFor(exit, rules = RULES) {
   };
 }
 
-/** متن فارسی پیشنهاد مرخصی */
-export function leaveText(s) {
-  return `بهتر است ${s.minutes} دقیقه مرخصی ساعتی از ${formatTime(s.from)} تا ${formatTime(s.to)} ثبت کنید.`;
+export function leaveText(suggestion) {
+  return `بهتر است ${suggestion.minutes} دقیقه مرخصی ساعتی از ${formatTime(suggestion.from)} تا ${formatTime(suggestion.to)} ثبت کنید.`;
 }

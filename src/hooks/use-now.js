@@ -2,32 +2,31 @@
 import { useSyncExternalStore } from "react";
 
 let listeners = new Set();
-let timer = null;
-let tick = 0;
+let intervalId = null;
+let tickCount = 0;
 
-function subscribe(cb) {
-  listeners.add(cb);
-  if (!timer) {
-    timer = setInterval(() => {
-      tick += 1;
-      listeners.forEach((l) => l());
+function subscribe(callback) {
+  listeners.add(callback);
+  if (!intervalId) {
+    intervalId = setInterval(() => {
+      tickCount += 1;
+      listeners.forEach((listener) => listener());
     }, 1000);
   }
   return () => {
-    listeners.delete(cb);
-    if (listeners.size === 0 && timer) {
-      clearInterval(timer);
-      timer = null;
+    listeners.delete(callback);
+    if (listeners.size === 0 && intervalId) {
+      clearInterval(intervalId);
+      intervalId = null;
     }
   };
 }
 
-/** ساعت فعلی با به‌روزرسانی هر ثانیه؛ روی سرور null است. cleanup خودکار. */
 export function useNow() {
-  const t = useSyncExternalStore(
+  const snapshot = useSyncExternalStore(
     subscribe,
-    () => `${Math.floor(Date.now() / 1000)}:${tick}`,
+    () => `${Math.floor(Date.now() / 1000)}:${tickCount}`,
     () => null,
   );
-  return t === null ? null : new Date(Number(t.split(":")[0]) * 1000);
+  return snapshot === null ? null : new Date(Number(snapshot.split(":")[0]) * 1000);
 }

@@ -2,43 +2,53 @@
 import { useRef } from "react";
 import { cn } from "@/lib/utils";
 
-/** تب‌های دسترس‌پذیر با پیمایش کیبورد (در RTL جهت‌ها برعکس است) */
 export function Tabs({ tabs, value, onValueChange, label }) {
   const refs = useRef({});
+
   const onKeyDown = (e) => {
-    const i = tabs.findIndex((t) => t.id === value);
-    let n = i;
-    if (e.key === "ArrowLeft") n = (i + 1) % tabs.length;
-    else if (e.key === "ArrowRight") n = (i - 1 + tabs.length) % tabs.length;
-    else if (e.key === "Home") n = 0;
-    else if (e.key === "End") n = tabs.length - 1;
+    const index = tabs.findIndex((t) => t.id === value);
+    let next = index;
+    if (e.key === "ArrowLeft") next = (index + 1) % tabs.length;
+    else if (e.key === "ArrowRight") next = (index - 1 + tabs.length) % tabs.length;
+    else if (e.key === "Home") next = 0;
+    else if (e.key === "End") next = tabs.length - 1;
     else return;
     e.preventDefault();
-    onValueChange(tabs[n].id);
-    refs.current[tabs[n].id]?.focus();
+    onValueChange(tabs[next].id);
+    refs.current[tabs[next].id]?.focus();
   };
+
   return (
-    <div role="tablist" aria-label={label} onKeyDown={onKeyDown} className="scrollbar-none -mx-4 flex gap-1 overflow-x-auto px-4 pb-1 sm:mx-0 sm:px-0">
-      {tabs.map((t) => {
-        const active = t.id === value;
-        const Icon = t.icon;
+    <div
+      role="tablist"
+      aria-label={label}
+      onKeyDown={onKeyDown}
+      className="scrollbar-none -mx-4 flex gap-1.5 overflow-x-auto px-4 pb-1 sm:mx-0 sm:px-0"
+    >
+      {tabs.map((tab) => {
+        const active = tab.id === value;
+        const Icon = tab.icon;
         return (
           <button
-            key={t.id}
-            ref={(el) => (refs.current[t.id] = el)}
+            key={tab.id}
+            ref={(el) => {
+              refs.current[tab.id] = el;
+            }}
             role="tab"
-            id={`tab-${t.id}`}
+            id={`tab-${tab.id}`}
             aria-selected={active}
-            aria-controls={`panel-${t.id}`}
+            aria-controls={`panel-${tab.id}`}
             tabIndex={active ? 0 : -1}
-            onClick={() => onValueChange(t.id)}
+            onClick={() => onValueChange(tab.id)}
             className={cn(
-              "flex shrink-0 items-center gap-2 rounded-xl border px-3.5 py-2 text-sm font-medium transition",
-              active ? "border-primary/40 bg-primary/15 text-primary" : "border-transparent text-muted-foreground hover:bg-muted",
+              "flex shrink-0 items-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-medium transition-all duration-150",
+              active
+                ? "border-primary/40 bg-primary-soft text-primary shadow-sm"
+                : "border-transparent text-muted-foreground hover:bg-muted hover:text-foreground",
             )}
           >
             <Icon className="size-4" aria-hidden />
-            {t.label}
+            {tab.label}
           </button>
         );
       })}

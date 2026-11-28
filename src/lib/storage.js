@@ -1,4 +1,3 @@
-// ذخیره‌سازی ساده‌ی localStorage؛ همه‌چیز فقط روی دستگاه کاربر می‌ماند
 export function readJSON(key, fallback) {
   try {
     const raw = window.localStorage.getItem(key);
@@ -13,7 +12,7 @@ export function writeJSON(key, value) {
     window.localStorage.setItem(key, JSON.stringify(value));
     window.dispatchEvent(new CustomEvent("karkard-storage", { detail: key }));
   } catch {
-    /* حالت خصوصی یا پر بودن حافظه: بی‌صدا نادیده گرفته می‌شود */
+    return;
   }
 }
 
@@ -22,6 +21,6 @@ export function removeKey(key) {
     window.localStorage.removeItem(key);
     window.dispatchEvent(new CustomEvent("karkard-storage", { detail: key }));
   } catch {
-    /* ignore */
+    return;
   }
 }
